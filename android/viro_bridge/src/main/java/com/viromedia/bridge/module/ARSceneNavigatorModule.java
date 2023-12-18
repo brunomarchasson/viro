@@ -26,6 +26,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import androidx.core.content.ContextCompat;
+
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 
@@ -331,7 +333,13 @@ public class ARSceneNavigatorModule extends ReactContextBaseJavaModule {
             reactActivity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.RECORD_AUDIO}, PERMISSION_REQ_CODE_AUDIO, listener);
         } else {
-            reactActivity.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+            String writeImagePermission;
+            if (Build.VERSION.SDK_INT >=33)
+                writeImagePermission = "android.permission.READ_MEDIA_IMAGES";
+            else
+                writeImagePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
+            reactActivity.requestPermissions(new String[]{writeImagePermission},
                     PERMISSION_REQ_CODE_STORAGE, listener);
         }
     }
@@ -343,6 +351,11 @@ public class ARSceneNavigatorModule extends ReactContextBaseJavaModule {
     }
 
     private static boolean hasRecordingPermissions(Context context) {
-        return ContextCompat.checkSelfPermission(context, "android.permission.WRITE_EXTERNAL_STORAGE") == 0;
+        String writeImagePermission;
+        if (Build.VERSION.SDK_INT >=33)
+            writeImagePermission = "android.permission.READ_MEDIA_IMAGES";
+        else
+            writeImagePermission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        return ContextCompat.checkSelfPermission(context, writeImagePermission) == 0;
     }
 }

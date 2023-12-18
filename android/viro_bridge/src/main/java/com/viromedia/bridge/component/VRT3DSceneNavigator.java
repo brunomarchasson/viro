@@ -24,7 +24,7 @@ package com.viromedia.bridge.component;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+//import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -378,7 +378,7 @@ public class VRT3DSceneNavigator extends FrameLayout {
         // Notify Native listeners (for NativeApp to ViroReactJs cases)
         Intent intent = new Intent();
         intent.setAction(ReactViroPackage.ON_EXIT_VIRO_BROADCAST);
-        LocalBroadcastManager.getInstance(mReactContext.getApplicationContext()).sendBroadcast(intent);
+       // LocalBroadcastManager.getInstance(mReactContext.getApplicationContext()).sendBroadcast(intent);
     }
 
     public void recenterTracking() {
